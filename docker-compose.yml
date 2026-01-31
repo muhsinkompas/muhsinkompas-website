@@ -1,0 +1,17 @@
+services:
+  web:
+    build: .
+    container_name: muhsin-website-dev
+    networks:
+      - muhsin_network
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_ENV=development
+    restart: unless-stopped
+
+networks:
+  muhsin_network:
+    external: true
