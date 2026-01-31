@@ -1,0 +1,89 @@
+{
+    "personal_info": {
+        "name": "Muhsin Kompas",
+        "email": "info@muhsinkompas.com",
+        "tagline": "Computer Vision & Deep Learning Engineer | ADAS, Image Processing, LLMs 🧠 🤖 🏁 🏎️💥 🎾 🎮 ♟️"
+    },
+    "about_me": {
+        "professional_bio": [
+            "I am an enthusiastic, curious and highly motivated engineer (MSc) with a strong passion for ADAS, Deep Learning, and Computer Vision. ",
+            "My master’s thesis investigated Explainable AI for deep reinforcement learning-based autonomous driving, demonstrating that TD3 can outperform other algorithms while offering human-interpretable decisions. ",
+            "My tech stack includes Python, Linux, OpenCV, FFmpeg, Flask/FastAPI, PyTorch, Docker, Kubernetes, and various cloud platforms. I believe in writing clean, maintainable code and documenting everything thoroughly. "
+        ],
+        "timeline": [
+            {
+                "type": "work",
+                "start_date": "2023-12-11",
+                "start_precision": "day",
+                "end_date": null,
+                "is_current": true,
+                "role": "R&D Engineer",
+                "organization": "ReklamStore İnternet Pazarlama A.Ş. - İstanbul",
+                "description": "Core engineer on CreabitAI (TÜBİTAK-1501) automatic ad-video creator and script writer platform; designed NLP micro-services using OpenAI API, automated object detection and video render. Deployed scalable Flask + Docker APIs and FFMPEG pipelines that generate personalised videos. Built Selenium/BeautifulSoup data-ingestion crawler and MySQL schema. Author semi-annually TÜBİTAK progress reports and present results to executive and academic boards. Co-author journal and conference papers disseminating R&D results"
+            },
+            {
+                "type": "work",
+                "start_date": "2021-01-01",
+                "start_precision": "day",
+                "end_date": "2023-04-30",
+                "end_precision": "day",
+                "is_current": false,
+                "role": "R&D Software Engineer",
+                "organization": "Oncostone LTD. - Denizli",
+                "description": "Worked on predicting urinary incontinence in children using wristband data (pulse, movement) and diaper wetness measurements. Implemented in C++ and Python, utilizing SciPy library, ESP32, and ANT devices. Drafted periodic Teknopark progress reports and proactively tracked the preparation and submission of detailed monthly R&D updates."
+            },
+            {
+                "type": "education",
+                "start_date": "2021-09-01",
+                "start_precision": "day",
+                "end_date": "2024-10-01",
+                "end_precision": "day",
+                "is_current": false,
+                "degree": "🎓 MSc. Computer Engineering",
+                "organization": "Pamukkale University",
+                "description": "Specialized in ADAS, Deep Learning, XAI research.",
+                "gpa": {
+                    "value": 3.61,
+                    "scale": 4.0
+                },
+                "thesis": {
+                    "title": "Explainable Artificial Intelligence (XAI) for Deep Reinforcement Learning Based Autonomous Driving",
+                    "description": "TD3 out-performed PPO/DDPG in TORCS; SHAP validated human-like behaviour.",
+                    "advisor": "Dr. İbrahim Kök",
+                    "link": "http://example.com/thesis.pdf"
+                }
+            },
+            {
+                "type": "education",
+                "start_date": "2016-08-13",
+                "start_precision": "day",
+                "end_date": "2020-10-06",
+                "end_precision": "day",
+                "is_current": false,
+                "degree": "🎓 BSc. Electrical and Electronics Engineering",
+                "organization": "Pamukkale University",
+                "description": "Member of Alatay Mobil Autonomous Team. Developed autonomous vehicle for Robotaxi Passenger Autonomous Vehicle Competition at Teknofest. Focused on image processing and computer vision.",
+                "gpa": {
+                    "value": 3.10,
+                    "scale": 4.0
+                },
+                "thesis": {
+                    "title": "Image-Processing-Based Real-Time Lane Detection & Tracking for Autonomous Vehicles.",
+                    "description": "Developed a real-time lane detection system using OpenCV and Python with AirSim and Unreal Engine 4, achieving high accuracy across various lighting and weather conditions.",
+                    "advisor": "Dr. Aydın Kızılkaya",
+                    "link": "http://example.com/undergrad_thesis.pdf"
+                }
+            }
+        ]
+    },
+    "contact": {
+        "email": "info@muhsinkompas.com",
+        "location": "İstanbul, Türkiye",
+        "availability": "Open to new opportunities, Open to freelance & consulting opportunities",
+        "socials": {
+            "linkedin": "https://www.linkedin.com/in/muhsinkompas",
+            "github": "https://github.com/muhsinkompas",
+            "twitter": "https://x.com/muhsinkompas"
+        }
+    }
+}

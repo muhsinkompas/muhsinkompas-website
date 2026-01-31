@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhsin Kompas | AI & Backend Engineer</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts - Monospace for terminal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Custom scrollbar for dark theme */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #09090b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3f3f46;
+        }
+    </style>
+</head>
+
+<body class="bg-zinc-950 text-zinc-100 font-sans antialiased">
+
+    <!-- ============================================
+         NAVBAR - Sticky with blur backdrop
+         Can be extracted to: templates/partials/navbar.html
+    ============================================= -->
+    <nav class="sticky top-0 z-50 backdrop-blur-md bg-zinc-950/80 border-b border-zinc-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                
+                <!-- Logo / Name -->
+                <a href="#home" class="text-lg font-semibold text-zinc-100 hover:text-white transition-colors">
+                    MK<span class="text-zinc-500">.</span>
+                </a>
+                
+                <!-- Desktop Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm">Home</a>
+                    <a href="#about" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm">About</a>
+                    <a href="#projects" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm">Projects</a>
+                    <a href="#wiki" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm">Wiki / Blog</a>
+                    <a href="#hobbies" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm">Hobbies</a>
+                    <a href="#contact" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm">Contact</a>
+                </div>
+                
+                <!-- GitHub Icon Link -->
+                <a href="https://github.com/muhsinkompas" target="_blank" rel="noopener noreferrer" 
+                   class="text-zinc-400 hover:text-zinc-100 transition-colors">
+                    <i class="fa-brands fa-github text-xl"></i>
+                </a>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-zinc-400 hover:text-zinc-100">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Navigation Menu -->
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <div class="flex flex-col space-y-3">
+                    <a href="#home" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm">Home</a>
+                    <a href="#about" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm">About</a>
+                    <a href="#projects" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm">Projects</a>
+                    <a href="#wiki" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm">Wiki / Blog</a>
+                    <a href="#hobbies" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm">Hobbies</a>
+                    <a href="#contact" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============================================
+         HERO SECTION - Center aligned profile
+         Can be extracted to: templates/sections/hero.html
+    ============================================= -->
+    <section id="home" class="min-h-[80vh] flex items-center justify-center px-4">
+        <div class="text-center">
+            
+            <!-- Profile Image with Grayscale Filter -->
+            <div class="mb-8">
+                <img 
+                    src="{{ url_for('static', filename=images['profile']) }}"
+                    alt="Muhsin Kompas"
+                    class="w-64 h-64 rounded-full mx-auto border border-zinc-800 grayscale hover:grayscale-0 transition-all duration-500"
+                >
+            </div>
+            
+            <!-- Hero Text -->
+            <h1 class="text-4xl sm:text-5xl font-bold text-zinc-100 mb-4">
+                Muhsin Kompas
+            </h1>
+            <p class="text-lg text-zinc-400 mb-8 max-w-xl mx-auto">
+                AI & Backend Engineer | XAI, DL, Autonomous Systems
+            </p>
+            
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <!-- Primary Button -->
+                <a href="#projects" 
+                   class="px-6 py-3 bg-zinc-100 text-zinc-950 font-medium text-sm rounded hover:bg-white transition-colors">
+                    View Projects
+                </a>
+                <!-- Secondary Outline Button -->
+                <a href="{{ url_for('static', filename=files['resume']) }}" download
+                   class="px-6 py-3 border border-zinc-700 text-zinc-300 font-medium text-sm rounded hover:border-zinc-500 hover:text-zinc-100 transition-colors">
+                    <i class="fa-solid fa-download mr-2"></i>Download CV
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         ABOUT SECTION - Two column with timeline
+         Can be extracted to: templates/sections/about.html
+    ============================================= -->
+    <section id="about" class="py-24 px-4 border-t border-zinc-800">
+        <div class="max-w-6xl mx-auto">
+            
+            <!-- Section Header -->
+            <h2 class="text-3xl font-bold text-zinc-100 mb-12">About</h2>
+            
+            <div class="grid md:grid-cols-2 gap-12 lg:gap-16">
+                
+                <!-- Left Column: Professional Bio -->
+                <div>
+                    <h3 class="text-xl font-semibold text-zinc-100 mb-4">Professional Bio</h3>
+                    <div class="space-y-4 text-zinc-400 leading-relaxed">
+                        <p>
+                            I'm a software engineer specializing in AI, CV... 
+                        </p>
+                        <p>
+                            Currently working at ...
+                        </p>
+                        <p>
+                            My tech stack includes Python...
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Right Column: Timeline -->
+                <div>
+                    <h3 class="text-xl font-semibold text-zinc-100 mb-6">Timeline</h3>
+                    
+                    <!-- Timeline Container -->
+                    <div class="relative border-l border-zinc-800 pl-6 space-y-8">
+                        
+                        <!-- Timeline Item: M.Sc (Ongoing) -->
+                        <div class="relative">
+                            <!-- Dot -->
+                            <div class="absolute -left-[25px] top-1 w-2 h-2 bg-zinc-100 rounded-full"></div>
+                            <span class="text-xs text-zinc-500 font-mono">2023 - Present</span>
+                            <h4 class="text-zinc-100 font-medium mt-1">M.Sc. Computer Engineering</h4>
+                            <p class="text-zinc-400 text-sm">Ongoing • Focus on AI...</p>
+                        </div>
+                        
+                        <!-- Timeline Item: Current Job -->
+                        <div class="relative">
+                            <!-- Dot -->
+                            <div class="absolute -left-[25px] top-1 w-2 h-2 bg-zinc-500 rounded-full"></div>
+                            <span class="text-xs text-zinc-500 font-mono">2022 - Present</span>
+                            <h4 class="text-zinc-100 font-medium mt-1">R&D Engineer</h4>
+                            <p class="text-zinc-400 text-sm">Company • ML Infrastructure</p>
+                        </div>
+                        
+                        <!-- Timeline Item: B.Sc -->
+                        <div class="relative">
+                            <!-- Dot -->
+                            <div class="absolute -left-[25px] top-1 w-2 h-2 bg-zinc-700 rounded-full"></div>
+                            <span class="text-xs text-zinc-500 font-mono">2018 - 2022</span>
+                            <h4 class="text-zinc-100 font-medium mt-1">B.Sc. Electrical-Electronics Engineering</h4>
+                            <p class="text-zinc-400 text-sm">projects etc...</p>
+                        </div>
+                        
+                        <!-- Timeline Item: Internship -->
+                        <div class="relative">
+                            <!-- Dot -->
+                            <div class="absolute -left-[25px] top-1 w-2 h-2 bg-zinc-800 rounded-full"></div>
+                            <span class="text-xs text-zinc-500 font-mono">2021</span>
+                            <h4 class="text-zinc-100 font-medium mt-1">ML Engineering Intern</h4>
+                            <p class="text-zinc-400 text-sm">Computer Vision & Edge Deployment</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         PROJECTS SECTION - Project cards grid
+         Can be extracted to: templates/sections/projects.html
+    ============================================= -->
+    <section id="projects" class="py-24 px-4 border-t border-zinc-800">
+        <div class="max-w-6xl mx-auto">
+            
+            <!-- Section Header -->
+            <h2 class="text-3xl font-bold text-zinc-100 mb-4">Projects</h2>
+            <p class="text-zinc-400 mb-12">Selected works from my portfolio</p>
+            
+            <!-- Projects Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Project Card 1 -->
+                <article class="border border-zinc-800 rounded-lg overflow-hidden hover:border-zinc-700 transition-colors">
+                    <div class="aspect-video bg-zinc-900 flex items-center justify-center">
+                        <i class="fa-solid fa-robot text-4xl text-zinc-700"></i>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-zinc-100 font-semibold mb-2">Autonomous Navigation Stack</h3>
+                        <p class="text-zinc-400 text-sm mb-4">ROS2-based navigation system with SLAM...</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-zinc-900 text-zinc-400 text-xs rounded font-mono">ROS2</span>
+                            <span class="px-2 py-1 bg-zinc-900 text-zinc-400 text-xs rounded font-mono">Python</span>
+                            <span class="px-2 py-1 bg-zinc-900 text-zinc-400 text-xs rounded font-mono">Nav2</span>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- Project Card 2 -->
+                <article class="border border-zinc-800 rounded-lg overflow-hidden hover:border-zinc-700 transition-colors">
+                    <div class="aspect-video bg-zinc-900 flex items-center justify-center">
+                        <i class="fa-solid fa-brain text-4xl text-zinc-700"></i>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-zinc-100 font-semibold mb-2">XAI Dashboard</h3>
+                        <p class="text-zinc-400 text-sm mb-4">Explainable AI visualization tool for interpreting deep learning model decisions.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-zinc-900 text-zinc-400 text-xs rounded font-mono">PyTorch</span>
+                            <span class="px-2 py-1 bg-zinc-900 text-zinc-400 text-xs rounded font-mono">SHAP</span>
+                            <span class="px-2 py-1 bg-zinc-900 text-zinc-400 text-xs rounded font-mono">FastAPI</span>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- Project Card 3 -->
+                <article class="border border-zinc-800 rounded-lg overflow-hidden hover:border-zinc-700 transition-colors">
+                    <div class="aspect-video bg-zinc-900 flex items-center justify-center">
+                        <i class="fa-solid fa-server text-4xl text-zinc-700"></i>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-zinc-100 font-semibold mb-2">ML Pipeline Orchestrator</h3>
+                        <p class="text-zinc-400 text-sm mb-4">Kubernetes-native ML training and deployment pipeline with auto-scaling.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-zinc-900 text-zinc-400 text-xs rounded font-mono">K8s</span>
+                            <span class="px-2 py-1 bg-zinc-900 text-zinc-400 text-xs rounded font-mono">Airflow</span>
+                            <span class="px-2 py-1 bg-zinc-900 text-zinc-400 text-xs rounded font-mono">MLflow</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            
+            <!-- View All Link -->
+            <div class="mt-8 text-center">
+                <a href="https://github.com/muhsinkompas" target="_blank" 
+                   class="text-zinc-400 hover:text-zinc-100 text-sm transition-colors">
+                    View all projects on GitHub <i class="fa-solid fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         KNOWLEDGE BASE - Terminal window grid
+         Can be extracted to: templates/sections/knowledge.html
+    ============================================= -->
+    <section id="knowledge" class="py-24 px-4 border-t border-zinc-800">
+        <div class="max-w-6xl mx-auto">
+            
+            <!-- Section Header -->
+            <h2 class="text-3xl font-bold text-zinc-100 mb-4">Knowledge Base</h2>
+            <p class="text-zinc-400 mb-12">Commands and snippets I use daily</p>
+            
+            <!-- Terminal Windows Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Terminal Window 1: Ubuntu -->
+                <div class="border border-zinc-800 rounded-lg overflow-hidden">
+                    <!-- Terminal Header -->
+                    <div class="bg-zinc-900 px-4 py-3 flex items-center gap-2">
+                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        <span class="ml-2 text-zinc-500 text-xs font-mono">ubuntu@server:~</span>
+                    </div>
+                    <!-- Terminal Body -->
+                    <div class="bg-black p-4 font-mono text-sm">
+                        <p class="text-zinc-500 mb-1"># System update</p>
+                        <p class="text-green-400">$ sudo apt update && sudo apt upgrade -y</p>
+                        <p class="text-zinc-600 mt-3 mb-1"># Install Python env</p>
+                        <p class="text-green-400">$ python3 -m venv .venv</p>
+                        <p class="text-green-400">$ source .venv/bin/activate</p>
+                    </div>
+                </div>
+                
+                <!-- Terminal Window 2: ROS2 -->
+                <div class="border border-zinc-800 rounded-lg overflow-hidden">
+                    <!-- Terminal Header -->
+                    <div class="bg-zinc-900 px-4 py-3 flex items-center gap-2">
+                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        <span class="ml-2 text-zinc-500 text-xs font-mono">ros2@humble:~/ws</span>
+                    </div>
+                    <!-- Terminal Body -->
+                    <div class="bg-black p-4 font-mono text-sm">
+                        <p class="text-zinc-500 mb-1"># Launch navigation stack</p>
+                        <p class="text-green-400">$ ros2 launch nav2_bringup navigation_launch.py</p>
+                        <p class="text-zinc-600 mt-3 mb-1"># Build workspace</p>
+                        <p class="text-green-400">$ colcon build --symlink-install</p>
+                    </div>
+                </div>
+                
+                <!-- Terminal Window 3: Docker -->
+                <div class="border border-zinc-800 rounded-lg overflow-hidden">
+                    <!-- Terminal Header -->
+                    <div class="bg-zinc-900 px-4 py-3 flex items-center gap-2">
+                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        <span class="ml-2 text-zinc-500 text-xs font-mono">docker@host:~/app</span>
+                    </div>
+                    <!-- Terminal Body -->
+                    <div class="bg-black p-4 font-mono text-sm">
+                        <p class="text-zinc-500 mb-1"># Build and run containers</p>
+                        <p class="text-green-400">$ docker-compose up -d --build</p>
+                        <p class="text-zinc-600 mt-3 mb-1"># View running containers</p>
+                        <p class="text-green-400">$ docker ps --format "table {{ '{{' }}.Names{{ '}}' }}\t{{ '{{' }}.Status{{ '}}' }}"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         WIKI / BLOG SECTION - Latest posts
+         Can be extracted to: templates/sections/wiki.html
+    ============================================= -->
+    <section id="wiki" class="py-24 px-4 border-t border-zinc-800">
+        <div class="max-w-6xl mx-auto">
+            
+            <!-- Section Header -->
+            <div class="flex items-center justify-between mb-12">
+                <div>
+                    <h2 class="text-3xl font-bold text-zinc-100 mb-2">Latest from Wiki</h2>
+                    <p class="text-zinc-400">Technical articles and notes</p>
+                </div>
+                <a href="blog.html" class="text-zinc-400 hover:text-zinc-100 text-sm transition-colors hidden sm:block">
+                    View all posts <i class="fa-solid fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+            
+            <!-- Blog Posts Grid -->
+            <div class="grid md:grid-cols-3 gap-6">
+                
+                <!-- Blog Post 1 -->
+                <article class="group">
+                    <a href="blog.html#flask-optimization" class="block">
+                        <span class="text-xs text-zinc-600 font-mono">2024-01-15</span>
+                        <h3 class="text-zinc-100 font-medium mt-2 group-hover:text-zinc-300 transition-colors">
+                            Optimizing Flask for High Load
+                        </h3>
+                        <p class="text-zinc-500 text-sm mt-2">
+                            Techniques for scaling Flask applications with Gunicorn, caching, and async patterns.
+                        </p>
+                    </a>
+                </article>
+                
+                <!-- Blog Post 2 -->
+                <article class="group">
+                    <a href="blog.html#ros2-networking" class="block">
+                        <span class="text-xs text-zinc-600 font-mono">2024-01-08</span>
+                        <h3 class="text-zinc-100 font-medium mt-2 group-hover:text-zinc-300 transition-colors">
+                            ROS2 Networking Fixes
+                        </h3>
+                        <p class="text-zinc-500 text-sm mt-2">
+                            Common DDS configuration issues and how to solve them for multi-machine setups.
+                        </p>
+                    </a>
+                </article>
+                
+                <!-- Blog Post 3 -->
+                <article class="group">
+                    <a href="blog.html#pytorch-optimization" class="block">
+                        <span class="text-xs text-zinc-600 font-mono">2023-12-22</span>
+                        <h3 class="text-zinc-100 font-medium mt-2 group-hover:text-zinc-300 transition-colors">
+                            PyTorch Training Tricks
+                        </h3>
+                        <p class="text-zinc-500 text-sm mt-2">
+                            Mixed precision, gradient accumulation, and other techniques for faster training.
+                        </p>
+                    </a>
+                </article>
+            </div>
+            
+            <!-- Mobile View All Link -->
+            <div class="mt-8 text-center sm:hidden">
+                <a href="blog.html" class="text-zinc-400 hover:text-zinc-100 text-sm transition-colors">
+                    View all posts <i class="fa-solid fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         HOBBIES SECTION - Panoramic tabbed interface
+         Can be extracted to: templates/sections/hobbies.html
+    ============================================= -->
+    <section id="hobbies" class="py-24 px-4 border-t border-zinc-800">
+        <div class="max-w-6xl mx-auto">
+            
+            <!-- Section Header -->
+            <h2 class="text-3xl font-bold text-zinc-100 mb-4">Hobbies</h2>
+            <p class="text-zinc-400 mb-8">What I do when I'm not coding</p>
+            
+            <!-- Tab Navigation -->
+            <div class="flex flex-wrap gap-2 mb-6">
+                <button 
+                    class="hobby-tab px-4 py-2 text-sm font-medium rounded transition-colors bg-zinc-100 text-zinc-950" 
+                    data-tab="f1">
+                    <i class="fa-solid fa-flag-checkered mr-2"></i>Formula 1
+                </button>
+                <button 
+                    class="hobby-tab px-4 py-2 text-sm font-medium rounded transition-colors bg-zinc-900 text-zinc-400 hover:text-zinc-100" 
+                    data-tab="cooking">
+                    <i class="fa-solid fa-utensils mr-2"></i>Cooking
+                </button>
+                <button 
+                    class="hobby-tab px-4 py-2 text-sm font-medium rounded transition-colors bg-zinc-900 text-zinc-400 hover:text-zinc-100" 
+                    data-tab="movies">
+                    <i class="fa-solid fa-film mr-2"></i>Movies
+                </button>
+                <button 
+                    class="hobby-tab px-4 py-2 text-sm font-medium rounded transition-colors bg-zinc-900 text-zinc-400 hover:text-zinc-100" 
+                    data-tab="games">
+                    <i class="fa-solid fa-gamepad mr-2"></i>Video Games
+                </button>
+            </div>
+            
+            <!-- Tab Content Panels -->
+            <div class="relative">
+                
+                <!-- F1 Panel -->
+                <div id="panel-f1" class="hobby-panel">
+                    <div 
+                        class="relative rounded-lg overflow-hidden border border-zinc-800"
+                        style="background: linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.7)), url('{{ url_for('static', filename=images['f1_bg']) }}') center/cover no-repeat;">
+                        
+                        <div class="p-8 md:p-12 min-h-[300px] flex flex-col justify-end">
+                            <span class="text-xs text-zinc-500 font-mono mb-2">PASSION</span>
+                            <h3 class="text-2xl md:text-3xl font-bold text-zinc-100 mb-3">Formula 1</h3>
+                            <p class="text-zinc-400 max-w-2xl leading-relaxed">
+                                The perfect intersection of engineering excellence and human performance. 
+                                I follow every race weekend, analyzing telemetry data and strategy calls. 
+                                Favorite Engineer: Adrian Newey. Favorite era: The 2021 championship battle.
+                            </p>
+                            <div class="flex gap-4 mt-6">
+                                <span class="text-xs text-zinc-500 border border-zinc-800 px-3 py-1 rounded">Since 2015</span>
+                                <span class="text-xs text-zinc-500 border border-zinc-800 px-3 py-1 rounded">24 Races/Year</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cooking Panel -->
+                <div id="panel-cooking" class="hobby-panel hidden">
+                    <div 
+                        class="relative rounded-lg overflow-hidden border border-zinc-800"
+                        style="background: linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.7)), url('{{ url_for('static', filename=images['cooking_bg']) }}') center/cover no-repeat;">
+                        <div class="p-8 md:p-12 min-h-[300px] flex flex-col justify-end">
+                            <span class="text-xs text-zinc-500 font-mono mb-2">CREATIVITY</span>
+                            <h3 class="text-2xl md:text-3xl font-bold text-zinc-100 mb-3">Cooking</h3>
+                            <p class="text-zinc-400 max-w-2xl leading-relaxed">
+                                Cooking is like programming — precise measurements, following algorithms (recipes), 
+                                and debugging when something goes wrong. I specialize in Turkish and Mediterranean 
+                                cuisines...
+                            </p>
+                            <div class="flex gap-4 mt-6">
+                                <span class="text-xs text-zinc-500 border border-zinc-800 px-3 py-1 rounded">Mediterranean</span>
+                                <span class="text-xs text-zinc-500 border border-zinc-800 px-3 py-1 rounded">Fermentation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Movies Panel -->
+                <div id="panel-movies" class="hobby-panel hidden">
+                    <div 
+                        class="relative rounded-lg overflow-hidden border border-zinc-800"
+                        style="background: linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.7)), url('{{ url_for('static', filename=images['movies_bg']) }}') center/cover no-repeat;">
+                        <div class="p-8 md:p-12 min-h-[300px] flex flex-col justify-end">
+                            <span class="text-xs text-zinc-500 font-mono mb-2">STORYTELLING</span>
+                            <h3 class="text-2xl md:text-3xl font-bold text-zinc-100 mb-3">Movies</h3>
+                            <p class="text-zinc-400 max-w-2xl leading-relaxed">
+                                A cinephile with a soft spot for sci-fi, psychological thrillers, and 
+                                cinematography-driven films. Directors I admire: Christopher Nolan.
+                            </p>
+                            <div class="flex gap-4 mt-6">
+                                <span class="text-xs text-zinc-500 border border-zinc-800 px-3 py-1 rounded">Sci-Fi</span>
+                                <span class="text-xs text-zinc-500 border border-zinc-800 px-3 py-1 rounded">Psychological</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Games Panel -->
+                <div id="panel-games" class="hobby-panel hidden">
+                    <div 
+                        class="relative rounded-lg overflow-hidden border border-zinc-800"
+                        style="background: linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.7)), url('{{ url_for('static', filename=images['steam_panoramic']) }}') center/cover no-repeat;">
+                        <div class="p-8 md:p-12 min-h-[300px] flex flex-col justify-end">
+                            <span class="text-xs text-zinc-500 font-mono mb-2">INTERACTIVE</span>
+                            <h3 class="text-2xl md:text-3xl font-bold text-zinc-100 mb-3">Video Games</h3>
+                            <p class="text-zinc-400 max-w-2xl leading-relaxed">
+                                Gaming is how I unwind and appreciate interactive storytelling. 
+                                I gravitate towards narrative-driven RPGs and racing simulators. 
+                                Currently playing: Baldur's Gate 3. All-time favorites: The Witcher 3, 
+                                Disco Elysium, and Assetto Corsa Competizione.
+                            </p>
+                            <div class="flex gap-4 mt-6">
+                                <span class="text-xs text-zinc-500 border border-zinc-800 px-3 py-1 rounded">FPS Shooter</span>
+                                <span class="text-xs text-zinc-500 border border-zinc-800 px-3 py-1 rounded">Racing Sims</span>
+                                <span class="text-xs text-zinc-500 border border-zinc-800 px-3 py-1 rounded">RPG</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- ============================================
+         CONTACT SECTION - Contact info
+         Can be extracted to: templates/sections/contact.html
+    ============================================= -->
+    <section id="contact" class="py-24 px-4 border-t border-zinc-800">
+        <div class="max-w-6xl mx-auto">
+            
+            <!-- Section Header -->
+            <h2 class="text-3xl font-bold text-zinc-100 mb-4">Contact</h2>
+            <p class="text-zinc-400 mb-12">Let's work together</p>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                
+                <!-- Contact Info -->
+                <div class="space-y-6">
+                    <div>
+                        <span class="text-xs text-zinc-500 font-mono block mb-2">EMAIL</span>
+                        <a href="mailto:hello@muhsinkompas.com" class="text-zinc-100 hover:text-zinc-300 transition-colors">
+                            hello@muhsinkompas.com
+                        </a>
+                    </div>
+                    <div>
+                        <span class="text-xs text-zinc-500 font-mono block mb-2">LOCATION</span>
+                        <p class="text-zinc-400">Istanbul, Turkey</p>
+                    </div>
+                    <div>
+                        <span class="text-xs text-zinc-500 font-mono block mb-2">AVAILABILITY</span>
+                        <p class="text-zinc-400">Open to freelance & consulting opportunities</p>
+                    </div>
+                </div>
+                
+                <!-- Social Links -->
+                <div>
+                    <span class="text-xs text-zinc-500 font-mono block mb-4">CONNECT</span>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="https://github.com/muhsinkompas" target="_blank" 
+                           class="flex items-center gap-2 px-4 py-2 border border-zinc-800 rounded text-zinc-400 hover:text-zinc-100 hover:border-zinc-700 transition-colors">
+                            <i class="fa-brands fa-github"></i>
+                            <span class="text-sm">GitHub</span>
+                        </a>
+                        <a href="https://linkedin.com/in/muhsinkompas" target="_blank" 
+                           class="flex items-center gap-2 px-4 py-2 border border-zinc-800 rounded text-zinc-400 hover:text-zinc-100 hover:border-zinc-700 transition-colors">
+                            <i class="fa-brands fa-linkedin"></i>
+                            <span class="text-sm">LinkedIn</span>
+                        </a>
+                        <a href="https://twitter.com/muhsinkompas" target="_blank" 
+                           class="flex items-center gap-2 px-4 py-2 border border-zinc-800 rounded text-zinc-400 hover:text-zinc-100 hover:border-zinc-700 transition-colors">
+                            <i class="fa-brands fa-x-twitter"></i>
+                            <span class="text-sm">Twitter</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         FOOTER
+         Can be extracted to: templates/partials/footer.html
+    ============================================= -->
+    <footer class="py-8 px-4 border-t border-zinc-800">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            
+            <!-- Copyright -->
+            <p class="text-zinc-500 text-sm">
+                &copy; 2026 Muhsin Kompas. All rights reserved.
+            </p>
+            
+            <!-- Footer Links -->
+            <div class="flex items-center gap-6">
+                <a href="https://github.com/muhsinkompas" target="_blank" class="text-zinc-500 hover:text-zinc-300 transition-colors">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="https://linkedin.com/in/muhsinkompas" target="_blank" class="text-zinc-500 hover:text-zinc-300 transition-colors">
+                    <i class="fa-brands fa-linkedin"></i>
+                </a>
+                <a href="https://twitter.com/muhsinkompas" target="_blank" class="text-zinc-500 hover:text-zinc-300 transition-colors">
+                    <i class="fa-brands fa-x-twitter"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================
+         JAVASCRIPT - Vanilla JS for interactions
+         Can be extracted to: static/js/main.js
+    ============================================= -->
+    <script>
+        // ==========================================
+        // Mobile Menu Toggle
+        // ==========================================
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            // Toggle icon between bars and times
+            const icon = mobileMenuBtn.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        // Close mobile menu when clicking a link
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            });
+        });
+
+        // ==========================================
+        // Hobbies Tab Switching
+        // ==========================================
+        const hobbyTabs = document.querySelectorAll('.hobby-tab');
+        const hobbyPanels = document.querySelectorAll('.hobby-panel');
+
+        hobbyTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetTab = tab.getAttribute('data-tab');
+
+                // Update tab styles
+                hobbyTabs.forEach(t => {
+                    t.classList.remove('bg-zinc-100', 'text-zinc-950');
+                    t.classList.add('bg-zinc-900', 'text-zinc-400', 'hover:text-zinc-100');
+                });
+                tab.classList.remove('bg-zinc-900', 'text-zinc-400', 'hover:text-zinc-100');
+                tab.classList.add('bg-zinc-100', 'text-zinc-950');
+
+                // Show/hide panels
+                hobbyPanels.forEach(panel => {
+                    panel.classList.add('hidden');
+                });
+                document.getElementById(`panel-${targetTab}`).classList.remove('hidden');
+            });
+        });
+
+        // ==========================================
+        // Smooth scroll offset for sticky navbar
+        // ==========================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offsetTop = target.offsetTop - 80; // Account for sticky navbar
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
