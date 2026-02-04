@@ -98,3 +98,5 @@ instance/
 
 # local
 test.sh
+
+architecture.txt

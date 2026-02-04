@@ -45,6 +45,10 @@ def blog_detail(slug):
         return render_template("blog_detail.html", post=post)
     return "Yazı bulunamadı", 404
 
+@app.route("/cv")
+def cv():
+    return render_template("cv.html", files=FILES, contact=PCTX.contact)
+
 @app.route("/")
 def index():
     print("About Me Timeline:")
