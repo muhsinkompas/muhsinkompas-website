@@ -3,7 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Muhsin Kompas | AI & Backend Engineer</title>
+    <title>{% block title %}Muhsin Kompas | AI & Backend Engineer{% endblock %}</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="{% block meta_description %}Muhsin Kompas - Computer Vision & Deep Learning Engineer specializing in ADAS, Image Processing, and LLMs.{% endblock %}">
+    <meta name="author" content="Muhsin Kompas">
+    <meta name="theme-color" content="#09090b">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{% block og_title %}Muhsin Kompas | AI & Backend Engineer{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Computer Vision & Deep Learning Engineer specializing in ADAS, Image Processing, and LLMs.{% endblock %}">
+    <meta property="og:image" content="{{ url_for('static', filename='images/favicon/android-chrome-512x512.png', _external=True) }}">
+    <meta property="og:url" content="{{ request.url }}">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}Muhsin Kompas | AI & Backend Engineer{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Computer Vision & Deep Learning Engineer{% endblock %}">
+    
+    <!-- Favicon & App Icons -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon/favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon/favicon-16x16.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon/favicon-32x32.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/favicon/apple-touch-icon.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -31,6 +55,54 @@
     </script>
     
     <style>
+        /* ==========================================
+           NAVBAR CUSTOMIZATION - Easy to modify!
+           ========================================== */
+        :root {
+            /* Logo */
+            --nav-logo-height: 96px;          /* Logo height (32px=h-8, 40px=h-10, 48px=h-12) */
+            
+            /* Desktop Navigation */
+            --nav-font-size: 0.875rem;        /* 14px = 0.875rem, 16px = 1rem */
+            --nav-font-weight: 500;           /* 400=normal, 500=medium, 600=semibold */
+            --nav-letter-spacing: 0;          /* 0.025em for slight spacing */
+            
+            /* Mobile Navigation */
+            --nav-mobile-font-size: 1rem;     /* Mobile menu font size */
+        }
+        
+        .nav-logo {
+            height: var(--nav-logo-height);
+            width: auto;
+        }
+        
+        .nav-link {
+            color: #a1a1aa;                   /* zinc-400 */
+            font-size: var(--nav-font-size);
+            font-weight: var(--nav-font-weight);
+            letter-spacing: var(--nav-letter-spacing);
+            transition: color 0.2s;
+        }
+        
+        .nav-link:hover {
+            color: #f4f4f5;                   /* zinc-100 */
+        }
+        
+        .nav-link-mobile {
+            color: #a1a1aa;
+            font-size: var(--nav-mobile-font-size);
+            font-weight: var(--nav-font-weight);
+            transition: color 0.2s;
+        }
+        
+        .nav-link-mobile:hover {
+            color: #f4f4f5;
+        }
+        
+        /* ==========================================
+           GLOBAL STYLES
+           ========================================== */
+        
         /* Smooth scroll behavior */
         html {
             scroll-behavior: smooth;
@@ -51,6 +123,8 @@
             background: #3f3f46;
         }
     </style>
+    
+    {% block head %}{% endblock %}
 </head>
 <body class="bg-zinc-950 text-zinc-100 font-sans antialiased">
 
@@ -62,21 +136,25 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 
-                <!-- Logo / Name -->
-                <a href="{{ url_for('index') }}" class="text-lg font-semibold text-zinc-100 hover:text-white transition-colors">
-                    MK<span class="text-zinc-500">.</span>
+                <!-- Logo -->
+                <a href="{{ url_for('index') }}" class="flex items-center hover:opacity-80 transition-opacity">
+                    <img 
+                        src="{{ url_for('static', filename='images/logo.png') }}" 
+                        alt="MK Logo" 
+                        class="nav-logo"
+                    >
                 </a>
                 
                 <!-- Desktop Navigation Links -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="{{ url_for('index') }}#home" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm">Home</a>
-                    <a href="{{ url_for('index') }}#about" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm">About</a>
-                    <a href="{{ url_for('index') }}#projects" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm">Projects</a>
-                    <a href="{{ url_for('index') }}#wiki" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm">Wiki / Blog</a>
-                    <a href="{{ url_for('index') }}#hobbies" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm">Hobbies</a>
-                    <a href="{{ url_for('index') }}#contact" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm">Contact</a>
-                    <a href="{{ url_for('cv') }}" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm flex items-center gap-1">
-                        <i class="fa-solid fa-file-lines text-xs"></i>CV
+                    <a href="{{ url_for('index') }}#home" class="nav-link">Home</a>
+                    <a href="{{ url_for('index') }}#about" class="nav-link">About</a>
+                    <a href="{{ url_for('index') }}#projects" class="nav-link">Projects</a>
+                    <a href="{{ url_for('index') }}#wiki" class="nav-link">Wiki / Blog</a>
+                    <a href="{{ url_for('index') }}#hobbies" class="nav-link">Hobbies</a>
+                    <a href="{{ url_for('index') }}#contact" class="nav-link">Contact</a>
+                    <a href="{{ url_for('cv') }}" class="nav-link flex items-center gap-1.5">
+                        <i class="fa-solid fa-file-lines"></i>CV
                     </a>
                 </div>
                 
@@ -95,14 +173,14 @@
             <!-- Mobile Navigation Menu -->
             <div id="mobile-menu" class="hidden md:hidden pb-4">
                 <div class="flex flex-col space-y-3">
-                    <a href="{{ url_for('index') }}#home" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm">Home</a>
-                    <a href="{{ url_for('index') }}#about" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm">About</a>
-                    <a href="{{ url_for('index') }}#projects" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm">Projects</a>
-                    <a href="{{ url_for('index') }}#wiki" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm">Wiki / Blog</a>
-                    <a href="{{ url_for('index') }}#hobbies" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm">Hobbies</a>
-                    <a href="{{ url_for('index') }}#contact" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm">Contact</a>
-                    <a href="{{ url_for('cv') }}" class="text-zinc-400 hover:text-zinc-100 transition-colors text-sm flex items-center gap-1">
-                        <i class="fa-solid fa-file-lines text-xs"></i>CV
+                    <a href="{{ url_for('index') }}#home" class="nav-link-mobile">Home</a>
+                    <a href="{{ url_for('index') }}#about" class="nav-link-mobile">About</a>
+                    <a href="{{ url_for('index') }}#projects" class="nav-link-mobile">Projects</a>
+                    <a href="{{ url_for('index') }}#wiki" class="nav-link-mobile">Wiki / Blog</a>
+                    <a href="{{ url_for('index') }}#hobbies" class="nav-link-mobile">Hobbies</a>
+                    <a href="{{ url_for('index') }}#contact" class="nav-link-mobile">Contact</a>
+                    <a href="{{ url_for('cv') }}" class="nav-link-mobile flex items-center gap-1.5">
+                        <i class="fa-solid fa-file-lines"></i>CV
                     </a>
                 </div>
             </div>
@@ -118,10 +196,17 @@
     <footer class="py-8 px-4 border-t border-zinc-800">
         <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
             
-            <!-- Copyright -->
-            <p class="text-zinc-500 text-sm">
-                &copy; 2026 Muhsin Kompas. All rights reserved.
-            </p>
+            <!-- Logo & Copyright -->
+            <div class="flex items-center gap-3">
+                <img 
+                    src="{{ url_for('static', filename='images/logo.png') }}" 
+                    alt="MK Logo" 
+                    class="h-24 w-auto opacity-50"
+                >
+                <p class="text-zinc-500 text-sm">
+                    &copy; 2026 Muhsin Kompas. All rights reserved.
+                </p>
+            </div>
             
             <!-- Footer Links -->
             <div class="flex items-center gap-6">

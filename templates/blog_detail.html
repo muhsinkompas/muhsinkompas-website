@@ -1,20 +1,330 @@
 {% extends "layout.html" %}
-<!-- THIS IS TEMPLATE FILE. COPIRINO PASTERINO  -->
 
 {% block content %}
     <!-- ============================================
-         Blog detail CONTENT
+         BLOG DETAIL - Single post view
     ============================================= -->
-    <main class="max-w-4xl mx-auto px-4 py-16">
-        <article class="prose prose-invert lg:prose-lg">
-            <h1 class="text-4xl font-bold mb-4">{{ post.title }}</h1>
-            <p class="text-zinc-400 mb-8">{{ post.content }}</p>
-            <a href="{{ url_for('blog_list') }}" class="text-blue-500 hover:underline">Back to Blog List</a>
-        </article>
-    </main>
-
+    <article class="min-h-screen py-16 px-4">
+        <div class="max-w-4xl mx-auto">
+            
+            <!-- Post Header -->
+            <header class="mb-12">
+                <!-- Back to Blog -->
+                <a href="{{ url_for('blog_list') }}" 
+                   class="inline-flex items-center gap-2 text-zinc-400 hover:text-zinc-100 text-sm transition-colors mb-8">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Back to Blog
+                </a>
+                
+                <!-- Tags -->
+                {% if post.tags %}
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        {% for tag in post.tags %}
+                            <a href="{{ url_for('blog_by_tag', tag=tag) }}"
+                               class="px-3 py-1 bg-zinc-900 text-zinc-400 text-xs rounded-full font-mono hover:bg-zinc-800 hover:text-zinc-300 transition-colors">
+                                {{ tag }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
+                <!-- Title -->
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-zinc-100 mb-6 leading-tight">
+                    {{ post.title }}
+                </h1>
+                
+                <!-- Meta Info -->
+                <div class="flex flex-wrap items-center gap-4 text-sm text-zinc-500">
+                    <!-- Date -->
+                    <div class="flex items-center gap-2">
+                        <i class="fa-regular fa-calendar"></i>
+                        <time datetime="{{ post.date_iso }}">{{ post.date_formatted }}</time>
+                    </div>
+                    
+                    <!-- Reading Time -->
+                    <div class="flex items-center gap-2">
+                        <i class="fa-regular fa-clock"></i>
+                        <span>{{ post.reading_time }} min read</span>
+                    </div>
+                    
+                    <!-- Author -->
+                    <div class="flex items-center gap-2">
+                        <i class="fa-regular fa-user"></i>
+                        <span>{{ post.author }}</span>
+                    </div>
+                </div>
+                
+                <!-- Draft Badge -->
+                {% if post.is_draft %}
+                    <div class="mt-4">
+                        <span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded-full font-medium">
+                            <i class="fa-solid fa-eye-slash mr-1"></i>Draft
+                        </span>
+                    </div>
+                {% endif %}
+            </header>
+            
+            <!-- Featured Image -->
+            {% if post.featured_image %}
+                <div class="mb-12 rounded-lg overflow-hidden border border-zinc-800">
+                    <img 
+                        src="{{ url_for('static', filename=post.featured_image) }}"
+                        alt="{{ post.title }}"
+                        class="w-full h-auto"
+                    >
+                </div>
+            {% endif %}
+            
+            <!-- Post Content -->
+            <div class="prose prose-invert prose-zinc max-w-none">
+                {{ post.content | safe }}
+            </div>
+            
+            <!-- Post Footer -->
+            <footer class="mt-16 pt-8 border-t border-zinc-800">
+                
+                <!-- Share Links -->
+                <div class="flex flex-wrap items-center gap-4 mb-8">
+                    <span class="text-sm text-zinc-500">Share this post:</span>
+                    <div class="flex gap-3">
+                        <a href="https://twitter.com/intent/tweet?text={{ post.title | urlencode }}&url={{ request.url | urlencode }}"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="w-10 h-10 flex items-center justify-center rounded-lg border border-zinc-800 text-zinc-400 hover:text-zinc-100 hover:border-zinc-700 transition-colors">
+                            <i class="fa-brands fa-x-twitter"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url | urlencode }}"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="w-10 h-10 flex items-center justify-center rounded-lg border border-zinc-800 text-zinc-400 hover:text-zinc-100 hover:border-zinc-700 transition-colors">
+                            <i class="fa-brands fa-linkedin-in"></i>
+                        </a>
+                        <button 
+                           onclick="copyToClipboard('{{ request.url }}')"
+                           class="w-10 h-10 flex items-center justify-center rounded-lg border border-zinc-800 text-zinc-400 hover:text-zinc-100 hover:border-zinc-700 transition-colors"
+                           title="Copy link">
+                            <i class="fa-solid fa-link"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Tags Section -->
+                {% if post.tags %}
+                    <div class="mb-8">
+                        <span class="text-sm text-zinc-500 block mb-3">Tagged with:</span>
+                        <div class="flex flex-wrap gap-2">
+                            {% for tag in post.tags %}
+                                <a href="{{ url_for('blog_by_tag', tag=tag) }}"
+                                   class="px-3 py-1.5 bg-zinc-900 text-zinc-400 text-sm rounded hover:bg-zinc-800 hover:text-zinc-300 transition-colors">
+                                    #{{ tag }}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+                
+            </footer>
+            
+            <!-- Related Posts -->
+            {% if related_posts %}
+                <section class="mt-16 pt-8 border-t border-zinc-800">
+                    <h2 class="text-2xl font-bold text-zinc-100 mb-8">Related Posts</h2>
+                    
+                    <div class="grid md:grid-cols-3 gap-6">
+                        {% for related in related_posts %}
+                            <article class="group">
+                                <a href="{{ url_for('blog_detail', slug=related.slug) }}" class="block">
+                                    <span class="text-xs text-zinc-600 font-mono">{{ related.date_iso }}</span>
+                                    <h3 class="text-zinc-100 font-medium mt-2 group-hover:text-zinc-300 transition-colors line-clamp-2">
+                                        {{ related.title }}
+                                    </h3>
+                                    <p class="text-zinc-500 text-sm mt-2 line-clamp-2">
+                                        {{ related.excerpt }}
+                                    </p>
+                                </a>
+                            </article>
+                        {% endfor %}
+                    </div>
+                </section>
+            {% endif %}
+            
+            <!-- Navigation -->
+            <div class="mt-12 text-center">
+                <a href="{{ url_for('blog_list') }}" 
+                   class="inline-flex items-center gap-2 px-6 py-3 border border-zinc-800 text-zinc-400 rounded-lg hover:border-zinc-700 hover:text-zinc-100 transition-colors">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    All Posts
+                </a>
+            </div>
+            
+        </div>
+    </article>
 {% endblock %}
 
 {% block scripts %}
-    <!-- Add any page-specific JavaScript here if needed -->
+<style>
+    /* Prose customization for dark theme */
+    .prose {
+        --tw-prose-body: #a1a1aa;
+        --tw-prose-headings: #f4f4f5;
+        --tw-prose-lead: #a1a1aa;
+        --tw-prose-links: #f4f4f5;
+        --tw-prose-bold: #f4f4f5;
+        --tw-prose-counters: #71717a;
+        --tw-prose-bullets: #52525b;
+        --tw-prose-hr: #3f3f46;
+        --tw-prose-quotes: #d4d4d8;
+        --tw-prose-quote-borders: #3f3f46;
+        --tw-prose-captions: #71717a;
+        --tw-prose-code: #f4f4f5;
+        --tw-prose-pre-code: #e4e4e7;
+        --tw-prose-pre-bg: #18181b;
+        --tw-prose-th-borders: #3f3f46;
+        --tw-prose-td-borders: #27272a;
+    }
+    
+    .prose h1, .prose h2, .prose h3, .prose h4 {
+        color: var(--tw-prose-headings);
+        font-weight: 600;
+        margin-top: 2em;
+        margin-bottom: 0.75em;
+    }
+    
+    .prose h2 { font-size: 1.5em; }
+    .prose h3 { font-size: 1.25em; }
+    .prose h4 { font-size: 1.125em; }
+    
+    .prose p {
+        margin-bottom: 1.25em;
+        line-height: 1.75;
+    }
+    
+    .prose a {
+        color: var(--tw-prose-links);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+    }
+    
+    .prose a:hover {
+        color: #ffffff;
+    }
+    
+    .prose code {
+        background: #27272a;
+        padding: 0.2em 0.4em;
+        border-radius: 4px;
+        font-size: 0.875em;
+        font-family: 'JetBrains Mono', monospace;
+    }
+    
+    .prose pre {
+        background: #18181b;
+        border: 1px solid #27272a;
+        border-radius: 8px;
+        padding: 1em;
+        overflow-x: auto;
+        margin: 1.5em 0;
+    }
+    
+    .prose pre code {
+        background: transparent;
+        padding: 0;
+        font-size: 0.875em;
+    }
+    
+    .prose blockquote {
+        border-left: 4px solid #3f3f46;
+        padding-left: 1em;
+        font-style: italic;
+        color: #a1a1aa;
+        margin: 1.5em 0;
+    }
+    
+    .prose ul, .prose ol {
+        margin: 1em 0;
+        padding-left: 1.5em;
+    }
+    
+    .prose li {
+        margin: 0.5em 0;
+    }
+    
+    .prose img {
+        border-radius: 8px;
+        border: 1px solid #27272a;
+        margin: 2em auto;
+    }
+    
+    .prose table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 2em 0;
+    }
+    
+    .prose th, .prose td {
+        border: 1px solid #3f3f46;
+        padding: 0.75em 1em;
+        text-align: left;
+    }
+    
+    .prose th {
+        background: #27272a;
+        font-weight: 600;
+    }
+    
+    .prose hr {
+        border: none;
+        border-top: 1px solid #3f3f46;
+        margin: 2em 0;
+    }
+    
+    /* Code highlighting */
+    .highlight {
+        background: #18181b;
+        border: 1px solid #27272a;
+        border-radius: 8px;
+        padding: 1em;
+        overflow-x: auto;
+        margin: 1.5em 0;
+    }
+    
+    /* Header permalink */
+    .header-link {
+        margin-left: 0.5em;
+        opacity: 0;
+        transition: opacity 0.2s;
+        color: #52525b;
+    }
+    
+    .prose h2:hover .header-link,
+    .prose h3:hover .header-link,
+    .prose h4:hover .header-link {
+        opacity: 1;
+    }
+    
+    /* Line clamp */
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>
+
+<script>
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(function() {
+            // Show brief feedback
+            const btn = event.currentTarget;
+            const icon = btn.querySelector('i');
+            icon.classList.remove('fa-link');
+            icon.classList.add('fa-check');
+            
+            setTimeout(() => {
+                icon.classList.remove('fa-check');
+                icon.classList.add('fa-link');
+            }, 2000);
+        });
+    }
+</script>
 {% endblock %}

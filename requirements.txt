@@ -3,3 +3,6 @@ gunicorn
 jinja2
 requests
 sqlalchemy
+markdown
+python-frontmatter
+Pygments
