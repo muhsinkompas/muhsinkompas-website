@@ -2,13 +2,14 @@
     "personal_info": {
         "name": "Muhsin Kompas",
         "email": "info@muhsinkompas.com",
-        "tagline": "Computer Vision & Deep Learning Engineer | ADAS, Image Processing, LLMs 🧠 🤖 🏁 🏎️💥 🎾 🎮 ♟️"
+        "tagline": "Computer Vision & Deep Learning Engineer | Image Processing, LLMs, Passionate about ADAS & Autonomous Systems 🧠 🤖 🏎️ 🏁 "
     },
     "about_me": {
         "professional_bio": [
-            "I am an enthusiastic, curious and highly motivated engineer (MSc) with a strong passion for ADAS, Deep Learning, and Computer Vision. ",
-            "My master’s thesis investigated Explainable AI for deep reinforcement learning-based autonomous driving, demonstrating that TD3 can outperform other algorithms while offering human-interpretable decisions. ",
-            "My tech stack includes Python, Linux, OpenCV, FFmpeg, Flask/FastAPI, PyTorch, Docker, Kubernetes, and various cloud platforms. I believe in writing clean, maintainable code and documenting everything thoroughly. "
+            "I am an R&D Software Engineer with an MSc in Computer Engineering, driven by an innate curiosity to understand \"how things work\" under the hood. My career is defined by a hybrid focus: conducting rigorous academic research and translating those findings into functional software prototypes. ",
+            "Current Focus: AI & R&D Management At ReklamStore, I play a key role in the R&D department. My responsibilities extend beyond coding; I manage the full innovation lifecycle—from conducting literature reviews and drafting patent applications to developing Python-based APIs that power AI and Computer Vision features. I actively contribute to architectural decisions and ensure our projects meet high academic standards for TÜBİTAK reports. ",
+            "Core Passion: Autonomous Systems While my current role focuses on Generative AI, my engineering foundation is built on ADAS and Autonomous Vehicles. During my graduate studies and time with the Alatay Autonomous Team, I gained hands-on experience with C++, ROS, and Simulation Environments (AirSim, Unreal Engine 4, TORCS). I specifically worked on Deep Reinforcement Learning agents and Explainable AI (XAI) to make self-driving decisions transparent. ",
+            "Goal I am looking for a role where I can leverage my R&D discipline, backend skills, and engineering background to contribute to the next generation of automotive technologies."
         ],
         "timeline": [
             {
@@ -19,7 +20,7 @@
                 "is_current": true,
                 "role": "R&D Engineer",
                 "organization": "ReklamStore İnternet Pazarlama A.Ş. - İstanbul",
-                "description": "Core engineer on CreabitAI (TÜBİTAK-1501) automatic ad-video creator and script writer platform; designed NLP micro-services using OpenAI API, automated object detection and video render. Deployed scalable Flask + Docker APIs and FFMPEG pipelines that generate personalised videos. Built Selenium/BeautifulSoup data-ingestion crawler and MySQL schema. Author semi-annually TÜBİTAK progress reports and present results to executive and academic boards. Co-author journal and conference papers disseminating R&D results"
+                "description": "I play a key role in \"CreabitAI,\" a project supported by the TÜBİTAK-1501 program. I bridge the gap between academic research and commercial product development. I design NLP microservices using OpenAI API and build video processing pipelines with FFMPEG and Python, and MoviePy. I am responsible for the official reporting process. I prepare detailed technical reports and present our progress to TÜBİTAK referees and academic boards to ensure successful project continuation."
             },
             {
                 "type": "work",
@@ -30,7 +31,7 @@
                 "is_current": false,
                 "role": "R&D Software Engineer",
                 "organization": "Oncostone LTD. - Denizli",
-                "description": "Worked on predicting urinary incontinence in children using wristband data (pulse, movement) and diaper wetness measurements. Implemented in C++ and Python, utilizing SciPy library, ESP32, and ANT devices. Drafted periodic Teknopark progress reports and proactively tracked the preparation and submission of detailed monthly R&D updates."
+                "description": "I led the R&D department of a Technopark startup, managing the full lifecycle of an AI-driven Enuretic Alarm Device designed to treat pediatric bedwetting. I was responsible for the entire project management process, including the preparation of official R&D reports for the Technopark administration. Technically, I developed algorithms to analyze the child's sleep data from the moment of falling asleep up to the REM stage, aiming to predict high-risk intervals. I developed the firmware for ESP32 using C++ (ANT+ protocol) for low-power communication and wrote Python algorithms to process sleep signals and detect wetness events. "
             },
             {
                 "type": "education",
@@ -41,7 +42,7 @@
                 "is_current": false,
                 "degree": "🎓 MSc. Computer Engineering",
                 "organization": "Pamukkale University",
-                "description": "Specialized in ADAS, Deep Learning, XAI research.",
+                "description": "Explainable Artificial Intelligence (XAI) for Deep Reinforcement Learning-Based Autonomous Driving. Focused on solving the \"black box\" problem in autonomous vehicle decision-making. I developed racing agents using DRL algorithms (TD3, DDPG) in the TORCS simulator and implemented SHAP analysis to make their decisions transparent and interpretability. My thesis demonstrated that TD3 outperformed PPO/DDPG in TORCS, and SHAP validated that the agent's behavior aligned with human-like driving patterns. This work contributes to safer and more trustworthy autonomous systems by providing insights into the decision-making process of DRL agents.",
                 "gpa": {
                     "value": 3.61,
                     "scale": 4.0
@@ -62,7 +63,7 @@
                 "is_current": false,
                 "degree": "🎓 BSc. Electrical and Electronics Engineering",
                 "organization": "Pamukkale University",
-                "description": "Member of Alatay Mobil Autonomous Team. Developed autonomous vehicle for Robotaxi Passenger Autonomous Vehicle Competition at Teknofest. Focused on image processing and computer vision.",
+                "description": "Focused on Image Processing, Computer Vision, Deep Learning, Embedded Systems, and Autonomous Vehicles. Supplemented core curriculum with intensive research in autonomous vehicle simulation and control logic.",
                 "gpa": {
                     "value": 3.10,
                     "scale": 4.0
@@ -73,17 +74,70 @@
                     "advisor": "Dr. Aydın Kızılkaya",
                     "link": "http://example.com/undergrad_thesis.pdf"
                 }
+            },
+            {
+                "type": "project",
+                "start_date": "2019-01-01",
+                "start_precision": "year",
+                "end_date": "2020-10-06",
+                "end_precision": "day",
+                "is_current": false,
+                "title": "Autonomous System Developer & Core Member for Teknofest Robotaxi Competition",
+                "organization": "Alatay Mobil Autonomous Team",
+                "description": "I was a core R&D member of the university racing team (Ranked 4th in Teknofest 2020). I was responsible for the software stack, from simulation to the real road. I developed lane detection and path planning in ROS, integrated LiDAR and cameras on Nvidia Jetson, and managed CAN Bus communication. "
             }
         ]
     },
     "contact": {
         "email": "info@muhsinkompas.com",
-        "location": "İstanbul, Türkiye",
-        "availability": "Open to new opportunities, Open to freelance & consulting opportunities",
+        "location": "Istanbul, Türkiye 🇹🇷",
+        "availability": "Open to Full-time R&D Roles & Technical Consulting",
         "socials": {
             "linkedin": "https://www.linkedin.com/in/muhsinkompas",
             "github": "https://github.com/muhsinkompas",
             "twitter": "https://x.com/muhsinkompas"
+        }
+    },
+    "hobbies": {
+        "formula1": {
+            "logo": "fa-solid fa-flag-checkered mr-2",
+            "title": "Formula 1",
+            "background": "f1_bg.jpg",
+            "label": "ENGINEERING & PASSION",
+            "description": "I follow every race weekend not just as a fan, but with an engineer's eye. I enjoy analyzing telemetry data and tracking aerodynamic upgrades. I deeply admire Adrian Newey's engineering genius. Occasionally, I use Python to visualize race pace and strategy data myself.",
+            "tags": ["Engineering", "Telemetry Analysis", "Strategy", "Python"]
+        },
+        "cooking": {
+            "logo": "fa-solid fa-utensils mr-2",
+            "title": "Cooking",
+            "background": "cooking_bg.webp",
+            "label": "MINDFULNESS",
+            "description": "I love the rich flavors of Turkish cuisine and have a special curiosity for Italian recipes. Cooking helps me gather my focus and clear my mind. I enjoy exploring new recipes, with a specific passion for cooking and grilling meat dishes.",
+            "tags": ["Turkish Cuisine", "Italian Cuisine", "Grilling", "Focus"]
+        },
+        "movies": {
+            "logo": "fa-solid fa-film mr-2",
+            "title": "Cinematography",
+            "background": "movies_bg.png",
+            "label": "STORYTELLING",
+            "description": "I love analyzing movies from a technical perspective, focusing on screenwriting structures like the \"Hero's Journey\" and camera techniques. I feel a strong connection to Christopher Nolan's analytical directing style and Hans Zimmer's scores.",
+            "tags": ["Cinematography", "Screenwriting", "Batman Trilogy", "The Matrix", "The Lord of the Rings"]
+        },
+        "video_games": {
+            "logo": "fa-solid fa-gamepad mr-2",
+            "title": "Video Games",
+            "background": "steam_panoramic.png",
+            "label": "COMPETITIVE",
+            "description": "A gamer since the Nintendo and Atari era. While I enjoy competitive FPS and MOBA games like CS and Dota 2, my real passion lies in Racing Sims. I spend time on Assetto Corsa and iRacing, which complements my interest in vehicle dynamics.",
+            "tags": ["FPS", "MOBA", "Sim Racing", "Assetto Corsa"]
+        },
+        "chess": {
+            "logo": "fa-solid fa-chess mr-2",
+            "title": "Chess",
+            "background": "chess_bg.jpg",
+            "label": "STRATEGY",
+            "description": "I have been playing since childhood and admire the aggressive style of Blackburne. I am an active player on Lichess (Peak ~1800 Casual, ~1700 Bullet) and enjoy joining local tournaments. My favorite opening is the King's Gambit.",
+            "tags": ["Strategy", "Tactics", "King's Gambit opening"]
         }
     }
 }

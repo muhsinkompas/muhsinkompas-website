@@ -12,8 +12,9 @@ MONTHS_EN = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
              "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 ALLOWED_PRECISIONS = {"year", "month", "day"}
-ALLOWED_TIMELINE_TYPES = {"work", "education"}  # istersen genişlet
+ALLOWED_TIMELINE_TYPES = {"work", "education", "project"}  # istersen genişlet
 DOT_PALETTE = ["bg-zinc-100", "bg-zinc-400", "bg-zinc-500", "bg-zinc-600", "bg-zinc-700", "bg-zinc-800"]
+IMAGE_PATH = "images/"
 
 class ContextValidationError(Exception):
     def __init__(self, errors: List[str], warnings: Optional[List[str]] = None) -> None:
@@ -86,7 +87,9 @@ def _timeline_title(item: Dict[str, Any]) -> str:
         return item.get("role", "") or ""
     if item.get("type") == "education":
         return item.get("degree", "") or ""
-    return item.get("title", "") or item.get("role", "") or ""
+    if item.get("type") == "project":
+        return item.get("title", "") or ""
+    return item.get("title", "")
 
 
 def _timeline_subtitle(item: Dict[str, Any]) -> str:
@@ -143,6 +146,8 @@ def _build_display_title(item: Dict[str, Any]) -> str:
         return (item.get("role") or "").strip()
     if t == "education":
         return (item.get("degree") or "").strip()
+    if t == "project":
+        return (item.get("title") or "").strip()
     # fallback
     return (item.get("title") or item.get("role") or item.get("degree") or "").strip()
 
@@ -210,6 +215,7 @@ class ContextManager:
         self.about: Dict[str, Any] = {}
         self.contact: Dict[str, Any] = {}
         self.timeline: List[Dict[str, Any]] = []
+        self.hobbies: Dict[str, Any] = {}
 
         # opsiyonel asset shortcut'ları (template isterse)
         self.assets: Dict[str, Any] = {}
@@ -250,6 +256,7 @@ class ContextManager:
         # self.timeline = self.about.get("timeline", []) if isinstance(self.about.get("timeline"), list) else []
         # self.timeline = _tailor_timeline_items(self.about.get("timeline", []))
         self.timeline = self.about.get("timeline", [])
+        self.hobbies = ctx.get("hobbies", {}) if isinstance(ctx.get("hobbies"), dict) else {}
 
         self.assets = ctx.get("assets", {}) if isinstance(ctx.get("assets"), dict) else {}
         self.images = self.assets.get("images", {}) if isinstance(self.assets.get("images"), dict) else {}
@@ -268,6 +275,7 @@ class ContextManager:
             "about_me": self.about,
             "timeline": self.timeline,
             "contact": self.contact,
+            "hobbies": self.hobbies,
             "assets": self.assets,
             "images": self.images,
             "files": self.files,
@@ -362,6 +370,8 @@ class ContextManager:
                         warnings.append(f"{path}.role: missing (expected for work)")
                     if ttype == "education" and "degree" not in item:
                         warnings.append(f"{path}.degree: missing (expected for education)")
+                    if ttype == "project" and "title" not in item:
+                        warnings.append(f"{path}.title: missing (expected for project)")
 
                     # thesis link kontrol (opsiyonel)
                     th = item.get("thesis")
@@ -403,14 +413,34 @@ class ContextManager:
           - display_title
           - display_subtitle
         ekler ve sıralar.
+        
+        Hobbies background imagelarına static/{IMAGE_PATH} prefix ekler.
         """
         ctx = dict(ctx)
         about = dict(ctx.get("about_me", {}))
         tl = about.get("timeline", [])
         if not isinstance(tl, list):
             ctx["about_me"] = about
-            return ctx
+        else:
+            about["timeline"] = _tailor_timeline_items(tl)
+            ctx["about_me"] = about
 
-        about["timeline"] = _tailor_timeline_items(tl)
-        ctx["about_me"] = about
+        # Add images/ prefix to hobby background paths (url_for adds static/ automatically)
+        hobbies = ctx.get("hobbies", {})
+        if isinstance(hobbies, dict):
+            hobbies = dict(hobbies)
+            for hobby_id, hobby_data in hobbies.items():
+                if isinstance(hobby_data, dict):
+                    hobby_data = dict(hobby_data)
+                    if "background" in hobby_data and isinstance(hobby_data["background"], str):
+                        bg = hobby_data["background"]
+                        # Remove static/ prefix if present, ensure images/ prefix only
+                        bg = bg.replace("static/", "")
+                        if not bg.startswith(IMAGE_PATH):
+                            hobby_data["background"] = f"{IMAGE_PATH}{bg}"
+                        else:
+                            hobby_data["background"] = bg
+                    hobbies[hobby_id] = hobby_data
+            ctx["hobbies"] = hobbies
+        
         return ctx

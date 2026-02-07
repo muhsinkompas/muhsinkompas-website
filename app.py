@@ -14,6 +14,7 @@ IMAGES = {
     "cooking_bg": "images/cooking_bg.webp",
     "movies_bg": "images/movies_bg.png",
     "steam_panoramic": "images/steam_panoramic.png",
+    "chess_bg": "images/chess_bg.jpg",
 }
 
 FILES = {
@@ -120,7 +121,8 @@ def index():
     # Get recent blog posts for the wiki section
     recent_posts = blog.get_recent_posts(limit=3)
     recent_posts_data = [post.to_dict() for post in recent_posts]
-    
+    print("hobbies:")
+    print(PCTX.hobbies)
     return render_template(
         "index.html",
         images=IMAGES,
@@ -130,6 +132,7 @@ def index():
         personal_info=PCTX.personal,
         contact=PCTX.contact,
         recent_posts=recent_posts_data,
+        hobbies=PCTX.hobbies,
     )
 
 

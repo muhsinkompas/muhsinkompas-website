@@ -291,76 +291,31 @@
     <section id="hobbies" class="py-24 px-4 border-t border-zinc-800">
         <div class="max-w-6xl mx-auto">
             <h2 class="text-3xl font-bold text-zinc-100 mb-4">Hobbies</h2>
-            <p class="text-zinc-400 mb-8">What I do when I'm not coding</p>
+            <p class="text-zinc-400 mb-8">What I do when I'm not coding... 🎾 🎮 ♟️</p>
             <div class="flex flex-wrap gap-2 mb-6">
-                <button class="hobby-tab px-4 py-2 text-sm font-medium rounded transition-colors bg-zinc-100 text-zinc-950" data-tab="f1">
-                    <i class="fa-solid fa-flag-checkered mr-2"></i>Formula 1
-                </button>
-                <button class="hobby-tab px-4 py-2 text-sm font-medium rounded transition-colors bg-zinc-900 text-zinc-400 hover:text-zinc-100" data-tab="cooking">
-                    <i class="fa-solid fa-utensils mr-2"></i>Cooking
-                </button>
-                <button class="hobby-tab px-4 py-2 text-sm font-medium rounded transition-colors bg-zinc-900 text-zinc-400 hover:text-zinc-100" data-tab="movies">
-                    <i class="fa-solid fa-film mr-2"></i>Movies
-                </button>
-                <button class="hobby-tab px-4 py-2 text-sm font-medium rounded transition-colors bg-zinc-900 text-zinc-400 hover:text-zinc-100" data-tab="games">
-                    <i class="fa-solid fa-gamepad mr-2"></i>Video Games
-                </button>
+                {% for hobby_id, hobby in hobbies.items() %}
+                    <button class="hobby-tab px-4 py-2 text-sm font-medium rounded transition-colors {{ 'bg-zinc-100 text-zinc-950' if loop.first else 'bg-zinc-900 text-zinc-400 hover:text-zinc-100' }}" data-tab="{{ hobby_id }}">
+                        <i class="{{ hobby.logo }} mr-2"></i>{{ hobby.title }}
+                    </button>
+                {% endfor %}
             </div>
             <div class="relative">
-                <div id="panel-f1" class="hobby-panel">
-                    <div class="relative rounded-lg overflow-hidden border border-zinc-800" style="background: linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.7)), url('{{ url_for('static', filename=images['f1_bg']) }}') center/cover no-repeat;">
-                        <div class="p-8 md:p-12 min-h-[300px] flex flex-col justify-end">
-                            <span class="text-xs text-zinc-500 font-mono mb-2">PASSION</span>
-                            <h3 class="text-2xl md:text-3xl font-bold text-zinc-100 mb-3">Formula 1</h3>
-                            <p class="text-zinc-400 max-w-2xl leading-relaxed">The perfect intersection of engineering excellence and human performance. I follow every race weekend, analyzing telemetry data and strategy calls. Favorite team: McLaren. Favorite era: The 2021 championship battle.</p>
-                            <div class="flex gap-4 mt-6">
-                                <span class="text-xs text-zinc-500 border border-zinc-800 px-3 py-1 rounded">Since 2015</span>
-                                <span class="text-xs text-zinc-500 border border-zinc-800 px-3 py-1 rounded">24 Races/Year</span>
+                {% for hobby_id, hobby in hobbies.items() %}
+                    <div id="panel-{{ hobby_id }}" class="hobby-panel {{ '' if loop.first else 'hidden' }}">
+                        <div class="relative rounded-lg overflow-hidden border border-zinc-800" style="background: linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.7)), url('{{ url_for('static', filename=hobby.background) }}') center/cover no-repeat;">
+                            <div class="p-8 md:p-12 min-h-[300px] flex flex-col justify-end">
+                                <span class="text-xs text-zinc-500 font-mono mb-2">{{ hobby.label }}</span>
+                                <h3 class="text-2xl md:text-3xl font-bold text-zinc-100 mb-3">{{ hobby.title }}</h3>
+                                <p class="text-zinc-400 max-w-2xl leading-relaxed">{{ hobby.description }}</p>
+                                <div class="flex gap-4 mt-6">
+                                    {% for tag in hobby.tags %}
+                                        <span class="text-xs text-zinc-500 border border-zinc-800 px-3 py-1 rounded">{{ tag }}</span>
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div id="panel-cooking" class="hobby-panel hidden">
-                    <div class="relative rounded-lg overflow-hidden border border-zinc-800" style="background: linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.7)), url('{{ url_for('static', filename=images['cooking_bg']) }}') center/cover no-repeat;">
-                        <div class="p-8 md:p-12 min-h-[300px] flex flex-col justify-end">
-                            <span class="text-xs text-zinc-500 font-mono mb-2">CREATIVITY</span>
-                            <h3 class="text-2xl md:text-3xl font-bold text-zinc-100 mb-3">Cooking</h3>
-                            <p class="text-zinc-400 max-w-2xl leading-relaxed">Cooking is like programming – precise measurements, following algorithms (recipes), and debugging when something goes wrong. I specialize in Turkish and Mediterranean cuisines, with a growing interest in fermentation and bread making.</p>
-                            <div class="flex gap-4 mt-6">
-                                <span class="text-xs text-zinc-500 border border-zinc-800 px-3 py-1 rounded">Mediterranean</span>
-                                <span class="text-xs text-zinc-500 border border-zinc-800 px-3 py-1 rounded">Fermentation</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="panel-movies" class="hobby-panel hidden">
-                    <div class="relative rounded-lg overflow-hidden border border-zinc-800" style="background: linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.7)), url('{{ url_for('static', filename=images['movies_bg']) }}') center/cover no-repeat;">
-                        <div class="p-8 md:p-12 min-h-[300px] flex flex-col justify-end">
-                            <span class="text-xs text-zinc-500 font-mono mb-2">STORYTELLING</span>
-                            <h3 class="text-2xl md:text-3xl font-bold text-zinc-100 mb-3">Movies</h3>
-                            <p class="text-zinc-400 max-w-2xl leading-relaxed">A cinephile with a soft spot for sci-fi, psychological thrillers, and cinematography-driven films. Directors I admire: Denis Villeneuve, Christopher Nolan, and Andrei Tarkovsky. I maintain a Letterboxd diary with detailed reviews.</p>
-                            <div class="flex gap-4 mt-6">
-                                <span class="text-xs text-zinc-500 border border-zinc-800 px-3 py-1 rounded">Sci-Fi</span>
-                                <span class="text-xs text-zinc-500 border border-zinc-800 px-3 py-1 rounded">Psychological</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="panel-games" class="hobby-panel hidden">
-                    <div class="relative rounded-lg overflow-hidden border border-zinc-800" style="background: linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.7)), url('{{ url_for('static', filename=images['steam_panoramic']) }}') center/cover no-repeat;">
-                        <div class="p-8 md:p-12 min-h-[300px] flex flex-col justify-end">
-                            <span class="text-xs text-zinc-500 font-mono mb-2">INTERACTIVE</span>
-                            <h3 class="text-2xl md:text-3xl font-bold text-zinc-100 mb-3">Video Games</h3>
-                            <p class="text-zinc-400 max-w-2xl leading-relaxed">Gaming is how I unwind and appreciate interactive storytelling. I gravitate towards narrative-driven RPGs and racing simulators. Currently playing: Baldur's Gate 3. All-time favorites: DotA2, CS2, Forza Horizon, and Assetto Corsa Series.</p>
-                            <div class="flex gap-4 mt-6">
-                                <span class="text-xs text-zinc-500 border border-zinc-800 px-3 py-1 rounded">FPS Shooter</span>
-                                <span class="text-xs text-zinc-500 border border-zinc-800 px-3 py-1 rounded">MOBA</span>
-                                <span class="text-xs text-zinc-500 border border-zinc-800 px-3 py-1 rounded">Racing Sims</span>
-                                <span class="text-xs text-zinc-500 border border-zinc-800 px-3 py-1 rounded">RPG</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
@@ -371,7 +326,7 @@
     <section id="contact" class="py-24 px-4 border-t border-zinc-800">
         <div class="max-w-6xl mx-auto">
             <h2 class="text-3xl font-bold text-zinc-100 mb-4">Contact</h2>
-            <p class="text-zinc-400 mb-12">Let's work together</p>
+            <p class="text-zinc-400 mb-12">Let's Collaborate</p>
             <div class="grid md:grid-cols-2 gap-12">
                 <div class="space-y-6">
                     <div>
