@@ -1,3 +1,19 @@
+---
+title: "Linux Ubuntu ve Windows için Çift Ön Yüklemede (Dual Boot) Bluetooth Cihazları Eşleştirme Rehberi"
+date: 2025-01-06
+slug: pairing-bluetooth-devices-dualboot
+author: Muhsin Kompas
+tags:
+  - windows
+  - linux
+  - bluetooth
+  - pairing
+  - dualboot
+featured_image: images/blog/2025/dualbtpairing-thumbnail.png
+excerpt: "Guide how to pair your bluetooth devices both OS in same device."
+draft: false
+---
+
 # Linux Ubuntu ve Windows için Çift Ön Yüklemede (Dual Boot) Bluetooth Cihazları Eşleştirme Rehberi
 
 ## Giriş
