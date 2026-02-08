@@ -1,3 +1,136 @@
 {
-    
+    "terminals": [
+        {
+            "id": "system",
+            "title": "ubuntu@server:~",
+            "commands": [
+                {
+                    "comment": "System update",
+                    "command": "sudo apt update && sudo apt upgrade -y"
+                },
+                {
+                    "comment": "Install Python env",
+                    "command": "python3 -m venv .venv"
+                },
+                {
+                    "comment": null,
+                    "command": "source .venv/bin/activate"
+                },
+                {
+                    "comment": "Check system resources",
+                    "command": "htop"
+                }
+            ]
+        },
+        {
+            "id": "ros2",
+            "title": "ros2@humble:~/ws",
+            "commands": [
+                {
+                    "comment": "Launch navigation stack",
+                    "command": "ros2 launch nav2_bringup navigation_launch.py"
+                },
+                {
+                    "comment": "Build workspace",
+                    "command": "colcon build --symlink-install"
+                },
+                {
+                    "comment": "Source workspace",
+                    "command": "source install/setup.bash"
+                },
+                {
+                    "comment": "List available nodes",
+                    "command": "ros2 node list"
+                }
+            ]
+        },
+        {
+            "id": "docker",
+            "title": "docker@host:~/app",
+            "commands": [
+                {
+                    "comment": "Build and run containers",
+                    "command": "docker-compose up -d --build"
+                },
+                {
+                    "comment": "View running containers",
+                    "command": "docker ps --format \"table {{.Names}}\\t{{.Status}}\""
+                },
+                {
+                    "comment": "View logs",
+                    "command": "docker-compose logs -f"
+                },
+                {
+                    "comment": "Stop all containers",
+                    "command": "docker-compose down"
+                }
+            ]
+        },
+        {
+            "id": "git",
+            "title": "git@dev:~/project",
+            "commands": [
+                {
+                    "comment": "Initialize repository",
+                    "command": "git init"
+                },
+                {
+                    "comment": "Create feature branch",
+                    "command": "git checkout -b feature/new-feature"
+                },
+                {
+                    "comment": "Stage and commit changes",
+                    "command": "git add . && git commit -m \"feat: add new feature\""
+                },
+                {
+                    "comment": "Push to remote",
+                    "command": "git push origin feature/new-feature"
+                }
+            ]
+        },
+        {
+            "id": "python",
+            "title": "python@ml:~/models",
+            "commands": [
+                {
+                    "comment": "Install requirements",
+                    "command": "pip install -r requirements.txt"
+                },
+                {
+                    "comment": "Run training script",
+                    "command": "python train.py --epochs 100 --batch-size 32"
+                },
+                {
+                    "comment": "Start Jupyter notebook",
+                    "command": "jupyter notebook --no-browser --port=8888"
+                },
+                {
+                    "comment": "Export trained model",
+                    "command": "python export_model.py --format onnx"
+                }
+            ]
+        },
+        {
+            "id": "kubernetes",
+            "title": "kubectl@cluster:~",
+            "commands": [
+                {
+                    "comment": "Get all pods",
+                    "command": "kubectl get pods -A"
+                },
+                {
+                    "comment": "Apply configuration",
+                    "command": "kubectl apply -f deployment.yaml"
+                },
+                {
+                    "comment": "View pod logs",
+                    "command": "kubectl logs -f pod-name"
+                },
+                {
+                    "comment": "Scale deployment",
+                    "command": "kubectl scale deployment app --replicas=3"
+                }
+            ]
+        }
+    ]
 }

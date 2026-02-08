@@ -1,0 +1,312 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <!-- ============================================
+         PROJECT DETAIL - Single project view
+    ============================================= -->
+    <article class="min-h-screen py-16 px-4">
+        <div class="max-w-4xl mx-auto">
+            
+            <!-- Project Header -->
+            <header class="mb-12">
+                <!-- Back to Projects -->
+                <a href="{{ url_for('projects_list') }}" 
+                   class="inline-flex items-center gap-2 text-zinc-400 hover:text-zinc-100 text-sm transition-colors mb-8">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Back to Projects
+                </a>
+                
+                <!-- Technologies/Tags -->
+                {% if project.technologies %}
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        {% for tech in project.technologies %}
+                            <span class="px-3 py-1 bg-zinc-900 text-zinc-400 text-xs rounded-full font-mono">
+                                {{ tech }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
+                <!-- Title -->
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-zinc-100 mb-6 leading-tight">
+                    {{ project.title }}
+                    {% if project.featured %}
+                        <i class="fa-solid fa-star text-yellow-500 text-2xl ml-2"></i>
+                    {% endif %}
+                </h1>
+                
+                <!-- Meta Info -->
+                <div class="flex flex-wrap items-center gap-4 text-sm text-zinc-500 mb-6">
+                    <!-- Project Type -->
+                    <div class="flex items-center gap-2">
+                        {% if project.project_type == 'github' %}
+                            <i class="fa-brands fa-github"></i>
+                            <span>GitHub Repository</span>
+                        {% else %}
+                            <i class="fa-solid fa-folder"></i>
+                            <span>Local Project</span>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Date (if available) -->
+                    {% if project.date %}
+                        <div class="flex items-center gap-2">
+                            <i class="fa-regular fa-calendar"></i>
+                            <time datetime="{{ project.date_iso }}">{{ project.date_formatted }}</time>
+                        </div>
+                    {% endif %}
+                    
+                    <!-- GitHub Stats -->
+                    {% if project.project_type == 'github' %}
+                        {% if project.stars > 0 %}
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-star text-yellow-500"></i>
+                                <span>{{ project.stars }} stars</span>
+                            </div>
+                        {% endif %}
+                        {% if project.forks > 0 %}
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-code-fork"></i>
+                                <span>{{ project.forks }} forks</span>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                
+                <!-- External Links -->
+                <div class="flex flex-wrap gap-3">
+                    {% if project.github_url %}
+                        <a href="{{ project.github_url }}" 
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="inline-flex items-center gap-2 px-5 py-2.5 bg-zinc-100 text-zinc-950 font-medium text-sm rounded hover:bg-white transition-colors">
+                            <i class="fa-brands fa-github"></i>
+                            View on GitHub
+                        </a>
+                    {% endif %}
+                    {% if project.demo_url %}
+                        <a href="{{ project.demo_url }}" 
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="inline-flex items-center gap-2 px-5 py-2.5 border border-zinc-700 text-zinc-300 font-medium text-sm rounded hover:border-zinc-500 hover:text-zinc-100 transition-colors">
+                            <i class="fa-solid fa-external-link-alt"></i>
+                            Live Demo
+                        </a>
+                    {% endif %}
+                </div>
+                
+                <!-- Draft Badge -->
+                {% if project.is_draft %}
+                    <div class="mt-4">
+                        <span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded-full font-medium">
+                            <i class="fa-solid fa-eye-slash mr-1"></i>Draft
+                        </span>
+                    </div>
+                {% endif %}
+            </header>
+            
+            <!-- Featured Image -->
+            {% if project.featured_image %}
+                <div class="mb-12 rounded-lg overflow-hidden border border-zinc-800">
+                    <img 
+                        src="{{ url_for('static', filename=project.featured_image) }}"
+                        alt="{{ project.title }}"
+                        class="w-full h-auto"
+                    >
+                </div>
+            {% endif %}
+            
+            <!-- Project Description (Short) -->
+            <div class="mb-8 p-6 bg-zinc-900/50 border border-zinc-800 rounded-lg">
+                <h3 class="text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-2">Overview</h3>
+                <p class="text-zinc-300 leading-relaxed">{{ project.description }}</p>
+            </div>
+            
+            <!-- Project Content -->
+            <div class="prose prose-invert prose-zinc max-w-none">
+                {{ project.content | safe }}
+            </div>
+            
+            <!-- Project Footer -->
+            <footer class="mt-16 pt-8 border-t border-zinc-800">
+                
+                <!-- Tags Section -->
+                {% if project.tags %}
+                    <div class="mb-8">
+                        <span class="text-sm text-zinc-500 block mb-3">Tagged with:</span>
+                        <div class="flex flex-wrap gap-2">
+                            {% for tag in project.tags %}
+                                <a href="{{ url_for('projects_by_tag', tag=tag) }}"
+                                   class="px-3 py-1.5 bg-zinc-900 text-zinc-400 text-sm rounded hover:bg-zinc-800 hover:text-zinc-300 transition-colors">
+                                    #{{ tag }}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+                
+                <!-- Links -->
+                <div class="flex flex-wrap items-center gap-4">
+                    {% if project.github_url %}
+                        <a href="{{ project.github_url }}" 
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="text-zinc-400 hover:text-zinc-100 text-sm transition-colors flex items-center gap-2">
+                            <i class="fa-brands fa-github"></i>
+                            View Source Code
+                        </a>
+                    {% endif %}
+                    {% if project.demo_url %}
+                        <a href="{{ project.demo_url }}" 
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="text-zinc-400 hover:text-zinc-100 text-sm transition-colors flex items-center gap-2">
+                            <i class="fa-solid fa-external-link-alt"></i>
+                            Try Live Demo
+                        </a>
+                    {% endif %}
+                </div>
+                
+            </footer>
+            
+            <!-- Navigation -->
+            <div class="mt-12 text-center">
+                <a href="{{ url_for('projects_list') }}" 
+                   class="inline-flex items-center gap-2 px-6 py-3 border border-zinc-800 text-zinc-400 rounded-lg hover:border-zinc-700 hover:text-zinc-100 transition-colors">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    All Projects
+                </a>
+            </div>
+            
+        </div>
+    </article>
+{% endblock %}
+
+{% block scripts %}
+<style>
+    /* Prose customization for dark theme */
+    .prose {
+        --tw-prose-body: #a1a1aa;
+        --tw-prose-headings: #f4f4f5;
+        --tw-prose-lead: #a1a1aa;
+        --tw-prose-links: #f4f4f5;
+        --tw-prose-bold: #f4f4f5;
+        --tw-prose-counters: #71717a;
+        --tw-prose-bullets: #52525b;
+        --tw-prose-hr: #3f3f46;
+        --tw-prose-quotes: #d4d4d8;
+        --tw-prose-quote-borders: #3f3f46;
+        --tw-prose-captions: #71717a;
+        --tw-prose-code: #f4f4f5;
+        --tw-prose-pre-code: #e4e4e7;
+        --tw-prose-pre-bg: #18181b;
+        --tw-prose-th-borders: #3f3f46;
+        --tw-prose-td-borders: #27272a;
+    }
+    
+    .prose h1, .prose h2, .prose h3, .prose h4 {
+        color: var(--tw-prose-headings);
+        font-weight: 600;
+        margin-top: 2em;
+        margin-bottom: 0.75em;
+    }
+    
+    .prose h2 { font-size: 1.5em; }
+    .prose h3 { font-size: 1.25em; }
+    .prose h4 { font-size: 1.125em; }
+    
+    .prose p {
+        margin-bottom: 1.25em;
+        line-height: 1.75;
+    }
+    
+    .prose a {
+        color: var(--tw-prose-links);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+    }
+    
+    .prose a:hover {
+        color: #ffffff;
+    }
+    
+    .prose code {
+        background: #27272a;
+        padding: 0.2em 0.4em;
+        border-radius: 4px;
+        font-size: 0.875em;
+        font-family: 'JetBrains Mono', monospace;
+    }
+    
+    .prose pre {
+        background: #18181b;
+        border: 1px solid #27272a;
+        border-radius: 8px;
+        padding: 1em;
+        overflow-x: auto;
+        margin: 1.5em 0;
+    }
+    
+    .prose pre code {
+        background: transparent;
+        padding: 0;
+        font-size: 0.875em;
+    }
+    
+    .prose blockquote {
+        border-left: 4px solid #3f3f46;
+        padding-left: 1em;
+        font-style: italic;
+        color: #a1a1aa;
+        margin: 1.5em 0;
+    }
+    
+    .prose ul, .prose ol {
+        margin: 1em 0;
+        padding-left: 1.5em;
+    }
+    
+    .prose li {
+        margin: 0.5em 0;
+    }
+    
+    .prose img {
+        border-radius: 8px;
+        border: 1px solid #27272a;
+        margin: 2em auto;
+    }
+    
+    .prose table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 2em 0;
+    }
+    
+    .prose th, .prose td {
+        border: 1px solid #3f3f46;
+        padding: 0.75em 1em;
+        text-align: left;
+    }
+    
+    .prose th {
+        background: #27272a;
+        font-weight: 600;
+    }
+    
+    .prose hr {
+        border: none;
+        border-top: 1px solid #3f3f46;
+        margin: 2em 0;
+    }
+    
+    /* Code highlighting */
+    .highlight {
+        background: #18181b;
+        border: 1px solid #27272a;
+        border-radius: 8px;
+        padding: 1em;
+        overflow-x: auto;
+        margin: 1.5em 0;
+    }
+</style>
+{% endblock %}

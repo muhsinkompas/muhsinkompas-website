@@ -51,7 +51,7 @@
                     "title": "Explainable Artificial Intelligence (XAI) for Deep Reinforcement Learning Based Autonomous Driving",
                     "description": "TD3 out-performed PPO/DDPG in TORCS; SHAP validated human-like behaviour.",
                     "advisor": "Dr. İbrahim Kök",
-                    "link": "http://example.com/thesis.pdf"
+                    "link": "https://drive.google.com/file/d/1RdRAYfL3mygDPS36ZCivlEmAfxvJWZUH"
                 }
             },
             {
@@ -71,8 +71,7 @@
                 "thesis": {
                     "title": "Image-Processing-Based Real-Time Lane Detection & Tracking for Autonomous Vehicles.",
                     "description": "Developed a real-time lane detection system using OpenCV and Python with AirSim and Unreal Engine 4, achieving high accuracy across various lighting and weather conditions.",
-                    "advisor": "Dr. Aydın Kızılkaya",
-                    "link": "http://example.com/undergrad_thesis.pdf"
+                    "advisor": "Dr. Aydın Kızılkaya"
                 }
             },
             {
