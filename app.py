@@ -203,9 +203,7 @@ def index():
     # Get featured projects for projects section
     featured_projects = projects.get_featured_projects(limit=3)
     featured_projects_data = [proj.to_dict() for proj in featured_projects]
-    
-    print("hobbies:")
-    print(PCTX.hobbies)
+
     return render_template(
         "index.html",
         images=IMAGES,
